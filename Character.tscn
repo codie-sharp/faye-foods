@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bie0s44dycg67"]
+
+[ext_resource type="Script" path="res://CharacterScript.gd" id="1_8wequ"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3lpo"]
+albedo_color = Color(0.784314, 0.784314, 0.784314, 1)
+disable_receive_shadows = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a5sqs"]
+material = SubResource("StandardMaterial3D_o3lpo")
+radius = 0.25
+radial_segments = 4
+rings = 1
+
+[node name="Character" type="Node3D"]
+script = ExtResource("1_8wequ")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_a5sqs")

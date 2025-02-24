@@ -1,25 +1,26 @@
 extends Node3D
 
-var char = preload("res://Character1.tscn").instantiate()
-var seats: Dictionary = {}
+var available_seats = []
 
 func _ready():
-	init_seats()
+	available_seats = get_node("Counter/Seats").get_children()
+	for seat in available_seats:
+		var char = seat.get_node("Character")
+		char.char_ready.connect(_on_char_ready)
+		char.char_reset.connect(_on_char_reset)
 	spawn_char()
 
-func init_seats():
-	var seats_node = get_node("Counter/Seats")
-	for seat in seats_node.get_children():
-		seats[seat.index] = {
-			"position": seat.global_transform.origin,
-			"ready": true
-		}
-		seat.seat_state_changed.connect(_on_seat_state_changed)
+	var timer = get_node("SpawnTimer")
+	timer.timeout.connect(spawn_char)
+	timer.start()
 
 func spawn_char():
-	var random_seat = seats[randi_range(0, seats.size() - 1)]
-	char.global_transform.origin = random_seat["position"] - Vector3(0, char.move_distance, 0)
-	add_child(char)
+	if available_seats:
+		var random_seat = available_seats.pop_at(randi_range(0, available_seats.size() - 1))
+		random_seat.get_node("Character").spawn()
 
-func _on_seat_state_changed(index, ready):
-	print(index, ready)
+func _on_char_ready(plate):
+	print(plate)
+
+func _on_char_reset(seat):
+	available_seats.append(seat)
