@@ -20,6 +20,7 @@ func _on_char_seated():
 	plate.change_state()
 
 func _on_char_exited():
+	plate.change_state()
 	emit_signal("seat_available", self)
 
 func _on_food_selected():

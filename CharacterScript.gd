@@ -21,12 +21,12 @@ func sit():
 	var tween = get_tree().create_tween()
 	tween.finished.connect(emit_char_seated)
 	tween.tween_property(self, "global_transform:origin", top_pos, up_duration)
-	tween.tween_property(self, "global_transform:origin", end_pos, bob_duration)
+	await tween.tween_property(self, "global_transform:origin", end_pos, bob_duration)
 
 func exit():
 	var tween = get_tree().create_tween()
 	tween.finished.connect(emit_char_exited)
-	tween.tween_property(self, "global_transform:origin", start_pos, up_duration)
+	await tween.tween_property(self, "global_transform:origin", start_pos, up_duration)
 
 func emit_char_seated():
 	emit_signal("char_seated")
