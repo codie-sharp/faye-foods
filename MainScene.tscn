@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://vv4fufq63ka4"]
+[gd_scene load_steps=18 format=3 uid="uid://vv4fufq63ka4"]
 
 [ext_resource type="Script" path="res://MainScript.gd" id="1_ffukx"]
 [ext_resource type="PackedScene" uid="uid://bie0s44dycg67" path="res://Character.tscn" id="2_30pvr"]
@@ -10,7 +10,7 @@ size = Vector3(5, 1, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6d4kj"]
 height = 0.2
-radius = 0.25
+radius = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3lpo"]
 albedo_color = Color(0.784314, 0.784314, 0.784314, 1)
@@ -18,8 +18,8 @@ disable_receive_shadows = true
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_i45ce"]
 material = SubResource("StandardMaterial3D_o3lpo")
-top_radius = 0.3
-bottom_radius = 0.1
+top_radius = 0.4
+bottom_radius = 0.2
 height = 0.1
 radial_segments = 10
 rings = 2
@@ -27,11 +27,31 @@ cap_bottom = false
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_55mre"]
 height = 0.2
-radius = 0.25
+radius = 0.4
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_q6nci"]
 height = 0.2
-radius = 0.25
+radius = 0.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fcgb7"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d3ero"]
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4c7bm"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="SphereMesh" id="SphereMesh_63ioy"]
+radius = 0.15
+height = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4k7c"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="TorusMesh" id="TorusMesh_px0qh"]
+inner_radius = 0.07
+outer_radius = 0.17
 
 [sub_resource type="Environment" id="Environment_sry4h"]
 ambient_light_color = Color(1, 1, 1, 1)
@@ -42,7 +62,7 @@ script = ExtResource("1_ffukx")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1, 2)
 projection = 1
-fov = 45.0
+fov = 65.0
 size = 2.1
 
 [node name="Counter" type="MeshInstance3D" parent="."]
@@ -102,6 +122,45 @@ mesh = SubResource("CylinderMesh_i45ce")
 
 [node name="Character" parent="Counter/Seats/Seat3" instance=ExtResource("2_30pvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+
+[node name="Pantry" type="Node3D" parent="Counter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+
+[node name="Food1" type="Node3D" parent="Counter/Pantry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.25, 0)
+
+[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food1/Area3D"]
+shape = SubResource("BoxShape3D_fcgb7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food1/Area3D"]
+transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
+mesh = SubResource("BoxMesh_d3ero")
+
+[node name="Food2" type="Node3D" parent="Counter/Pantry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, 0)
+
+[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food2/Area3D"]
+shape = SubResource("BoxShape3D_4c7bm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food2/Area3D"]
+transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
+mesh = SubResource("SphereMesh_63ioy")
+
+[node name="Food3" type="Node3D" parent="Counter/Pantry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.25, 0)
+
+[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food3/Area3D"]
+shape = SubResource("BoxShape3D_g4k7c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food3/Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_px0qh")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 3)
