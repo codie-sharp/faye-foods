@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://vv4fufq63ka4"]
+[gd_scene load_steps=19 format=3 uid="uid://vv4fufq63ka4"]
 
 [ext_resource type="Script" path="res://MainScript.gd" id="1_ffukx"]
 [ext_resource type="PackedScene" uid="uid://bie0s44dycg67" path="res://Character.tscn" id="2_30pvr"]
 [ext_resource type="Script" path="res://SeatScript.gd" id="2_h5ort"]
 [ext_resource type="Script" path="res://PlateScript.gd" id="3_l1gvo"]
+[ext_resource type="Script" path="res://FoodScript.gd" id="5_6kl0y"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_u8fmr"]
 size = Vector3(5, 1, 1)
@@ -126,39 +127,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 [node name="Pantry" type="Node3D" parent="Counter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
 
-[node name="Food1" type="Node3D" parent="Counter/Pantry"]
+[node name="Food1" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.25, 0)
+script = ExtResource("5_6kl0y")
 
-[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food1"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food1/Area3D"]
+[node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food1"]
 shape = SubResource("BoxShape3D_fcgb7")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food1/Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food1"]
 transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
 mesh = SubResource("BoxMesh_d3ero")
 
-[node name="Food2" type="Node3D" parent="Counter/Pantry"]
+[node name="Food2" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, 0)
+script = ExtResource("5_6kl0y")
 
-[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food2/Area3D"]
+[node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food2"]
 shape = SubResource("BoxShape3D_4c7bm")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food2/Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food2"]
 transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
 mesh = SubResource("SphereMesh_63ioy")
 
-[node name="Food3" type="Node3D" parent="Counter/Pantry"]
+[node name="Food3" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.25, 0)
+script = ExtResource("5_6kl0y")
 
-[node name="Area3D" type="Area3D" parent="Counter/Pantry/Food3"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter/Pantry/Food3/Area3D"]
+[node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food3"]
 shape = SubResource("BoxShape3D_g4k7c")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food3/Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("TorusMesh_px0qh")
 
