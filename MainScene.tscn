@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://vv4fufq63ka4"]
+[gd_scene load_steps=21 format=3 uid="uid://vv4fufq63ka4"]
 
 [ext_resource type="Script" path="res://MainScript.gd" id="1_ffukx"]
 [ext_resource type="PackedScene" uid="uid://bie0s44dycg67" path="res://Character.tscn" id="2_30pvr"]
@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://PlateScript.gd" id="3_l1gvo"]
 [ext_resource type="Script" path="res://FoodScript.gd" id="5_6kl0y"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_u8fmr"]
-size = Vector3(5, 1, 1)
+[sub_resource type="Environment" id="Environment_sry4h"]
+ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_6d4kj"]
 height = 0.2
@@ -35,27 +35,33 @@ height = 0.2
 radius = 0.4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fcgb7"]
-size = Vector3(0.5, 0.5, 0.5)
+size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_d3ero"]
 size = Vector3(0.25, 0.25, 0.25)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_4c7bm"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="SphereShape3D" id="SphereShape3D_0qgj3"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_63ioy"]
 radius = 0.15
 height = 0.3
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_g4k7c"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ds1pg"]
+height = 0.15
+radius = 0.2
 
 [sub_resource type="TorusMesh" id="TorusMesh_px0qh"]
 inner_radius = 0.07
 outer_radius = 0.17
 
-[sub_resource type="Environment" id="Environment_sry4h"]
-ambient_light_color = Color(1, 1, 1, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_u8fmr"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j6b60"]
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y3u3a"]
+size = Vector3(5, 1, 0.1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ffukx")
@@ -66,10 +72,19 @@ projection = 1
 fov = 65.0
 size = 2.1
 
-[node name="Counter" type="MeshInstance3D" parent="."]
-cast_shadow = 0
-mesh = SubResource("BoxMesh_u8fmr")
-skeleton = NodePath("")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 3)
+light_energy = 3.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sry4h")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Counter" type="Area3D" parent="."]
+physics_interpolation_mode = 1
+input_capture_on_drag = true
 
 [node name="Seats" type="Node3D" parent="Counter"]
 
@@ -129,9 +144,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
 
 [node name="Food1" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.25, 0)
+input_capture_on_drag = true
 script = ExtResource("5_6kl0y")
 
 [node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food1"]
+physics_interpolation_mode = 1
+transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
 shape = SubResource("BoxShape3D_fcgb7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food1"]
@@ -140,10 +158,12 @@ mesh = SubResource("BoxMesh_d3ero")
 
 [node name="Food2" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, 0)
+input_capture_on_drag = true
 script = ExtResource("5_6kl0y")
 
 [node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food2"]
-shape = SubResource("BoxShape3D_4c7bm")
+physics_interpolation_mode = 1
+shape = SubResource("SphereShape3D_0qgj3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food2"]
 transform = Transform3D(0.707107, 0.183013, 0.683013, 0, 0.965926, -0.258819, -0.707107, 0.183013, 0.683013, 0, 0, 0)
@@ -151,21 +171,26 @@ mesh = SubResource("SphereMesh_63ioy")
 
 [node name="Food3" type="Area3D" parent="Counter/Pantry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.25, 0)
+input_capture_on_drag = true
 script = ExtResource("5_6kl0y")
 
 [node name="Collision" type="CollisionShape3D" parent="Counter/Pantry/Food3"]
-shape = SubResource("BoxShape3D_g4k7c")
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_ds1pg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Counter/Pantry/Food3"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("TorusMesh_px0qh")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 3)
-light_energy = 3.0
+[node name="CounterMesh" type="MeshInstance3D" parent="Counter"]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_u8fmr")
+skeleton = NodePath("")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_sry4h")
+[node name="CounterCollision" type="CollisionShape3D" parent="Counter"]
+shape = SubResource("BoxShape3D_j6b60")
 
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 2.0
+[node name="BackdropCollision" type="CollisionShape3D" parent="Counter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.5)
+shape = SubResource("BoxShape3D_y3u3a")

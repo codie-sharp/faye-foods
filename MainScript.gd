@@ -1,14 +1,14 @@
 extends Node3D
 
+@onready var camera = $Camera3D
+@onready var timer = $SpawnTimer
+
 var available_seats = []
 var pantry = []
-var camera
 var selected_food
 var is_dragging = false
 
 func _ready():
-	camera = get_viewport().get_camera_3d()
-	
 	pantry = get_node("Counter/Pantry").get_children()
 	for food in pantry:
 		food.food_selected.connect(_on_food_selected)
@@ -19,7 +19,6 @@ func _ready():
 
 	spawn_char()
 
-	var timer = get_node("SpawnTimer")
 	timer.timeout.connect(spawn_char)
 	timer.start()
 
@@ -27,10 +26,17 @@ func _input(event):
 	if event is InputEventMouseButton and !event.pressed:
 		is_dragging = false
 
-	# Get used to rays big dog
-	#elif is_dragging and event is InputEventMouseMotion:
-		#var world_pos = camera.project_position(event.position, 0)
-		#selected_food.global_transform.origin = Vector3(world_pos.x, world_pos.y, 0)
+	elif is_dragging and event is InputEventMouseMotion:
+		var space_state = get_world_3d().direct_space_state
+		var mousepos = get_viewport().get_mouse_position()
+		
+		var origin = camera.project_ray_origin(mousepos)
+		var end = origin + camera.project_ray_normal(mousepos) * 10
+		var query = PhysicsRayQueryParameters3D.create(origin, end, 1, [selected_food])
+		query.collide_with_areas = true
+
+		var result = space_state.intersect_ray(query)
+		selected_food.global_transform.origin = result.position
 
 func _on_food_selected(food):
 	is_dragging = true
