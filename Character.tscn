@@ -15,6 +15,6 @@ rings = 1
 [node name="Character" type="Node3D"]
 script = ExtResource("1_8wequ")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Mesh" type="MeshInstance3D" parent="."]
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_a5sqs")

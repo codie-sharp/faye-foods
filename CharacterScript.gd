@@ -3,6 +3,8 @@ extends Node3D
 signal char_seated
 signal char_exited
 
+@onready var skin = $Mesh.mesh.material.albedo_color
+
 var up_distance: float = 1.3	
 var up_duration: float = 0.7
 var bob_distance: float = 0.1
@@ -32,4 +34,5 @@ func emit_char_seated():
 	emit_signal("char_seated")
 
 func emit_char_exited():
+	skin = Color(randf(), randf(), randf())
 	emit_signal("char_exited")
