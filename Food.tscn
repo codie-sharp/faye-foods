@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://FoodScript.gd" id="1_80v7i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f2ggq"]
-size = Vector3(0.5, 0.5, 0.5)
+size = Vector3(0.4, 0.4, 0.4)
 
 [node name="Food" type="Area3D"]
 input_capture_on_drag = true

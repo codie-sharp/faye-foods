@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://hfb73d550nnp"]
+
+[ext_resource type="Script" path="res://PlateScript.gd" id="1_kaaq8"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3vset"]
+height = 0.15
+radius = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3lpo"]
+albedo_color = Color(0.784314, 0.784314, 0.784314, 1)
+disable_receive_shadows = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ormd5"]
+material = SubResource("StandardMaterial3D_o3lpo")
+top_radius = 0.4
+bottom_radius = 0.2
+height = 0.1
+radial_segments = 10
+rings = 2
+cap_bottom = false
+
+[node name="Plate" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_kaaq8")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_3vset")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_ormd5")

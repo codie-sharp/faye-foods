@@ -2,18 +2,17 @@ extends Node3D
 
 signal seat_available
 
-var character
-var plate
+@onready var character = $Character
+@onready var plate = $Plate
 
 func _ready():
-	character = get_node("Character")
 	character.char_seated.connect(_on_char_seated)
 	character.char_exited.connect(_on_char_exited)
-	
-	plate = get_node("Plate")
-	plate.food_plated.connect(_on_food_plated)
 
-func spawn_char():
+func spawn_char(food):
+	plate.food_wanted = food
+	character.get_node("FoodMesh").mesh = food.get_node("Mesh").mesh
+
 	character.sit()
 
 func _on_char_seated():
@@ -22,6 +21,3 @@ func _on_char_seated():
 func _on_char_exited():
 	plate.change_state()
 	emit_signal("seat_available", self)
-
-func _on_food_plated():
-	character.exit()

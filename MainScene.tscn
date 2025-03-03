@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://vv4fufq63ka4"]
+[gd_scene load_steps=10 format=3 uid="uid://vv4fufq63ka4"]
 
 [ext_resource type="Script" path="res://MainScript.gd" id="1_ffukx"]
 [ext_resource type="PackedScene" uid="uid://bie0s44dycg67" path="res://Character.tscn" id="2_30pvr"]
 [ext_resource type="Script" path="res://SeatScript.gd" id="2_h5ort"]
-[ext_resource type="Script" path="res://PlateScript.gd" id="3_l1gvo"]
+[ext_resource type="PackedScene" uid="uid://hfb73d550nnp" path="res://PlateScene.tscn" id="4_xhe28"]
 [ext_resource type="PackedScene" uid="uid://b661vbueog3em" path="res://Food.tscn" id="5_k1oek"]
 
 [sub_resource type="Environment" id="Environment_sry4h"]
@@ -17,31 +17,6 @@ size = Vector3(3.5, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_y3u3a"]
 size = Vector3(3.5, 1, 0.1)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_6d4kj"]
-height = 0.1
-radius = 0.4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3lpo"]
-albedo_color = Color(0.784314, 0.784314, 0.784314, 1)
-disable_receive_shadows = true
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_i45ce"]
-material = SubResource("StandardMaterial3D_o3lpo")
-top_radius = 0.4
-bottom_radius = 0.2
-height = 0.1
-radial_segments = 10
-rings = 2
-cap_bottom = false
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_55mre"]
-height = 0.1
-radius = 0.4
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_q6nci"]
-height = 0.1
-radius = 0.4
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ffukx")
@@ -84,52 +59,27 @@ shape = SubResource("BoxShape3D_y3u3a")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 script = ExtResource("2_h5ort")
 
-[node name="Plate" type="Area3D" parent="Counter/Seats/Seat1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-script = ExtResource("3_l1gvo")
-
-[node name="Collider" type="CollisionShape3D" parent="Counter/Seats/Seat1/Plate"]
-shape = SubResource("CylinderShape3D_6d4kj")
-
-[node name="Mesh" type="MeshInstance3D" parent="Counter/Seats/Seat1/Plate"]
-cast_shadow = 0
-mesh = SubResource("CylinderMesh_i45ce")
-
 [node name="Character" parent="Counter/Seats/Seat1" instance=ExtResource("2_30pvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+
+[node name="Plate" parent="Counter/Seats/Seat1" instance=ExtResource("4_xhe28")]
 
 [node name="Seat2" type="Node3D" parent="Counter/Seats"]
 script = ExtResource("2_h5ort")
 
-[node name="Plate" type="Area3D" parent="Counter/Seats/Seat2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-script = ExtResource("3_l1gvo")
-
-[node name="Collider" type="CollisionShape3D" parent="Counter/Seats/Seat2/Plate"]
-shape = SubResource("CylinderShape3D_55mre")
-
-[node name="Mesh" type="MeshInstance3D" parent="Counter/Seats/Seat2/Plate"]
-mesh = SubResource("CylinderMesh_i45ce")
-
 [node name="Character" parent="Counter/Seats/Seat2" instance=ExtResource("2_30pvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+
+[node name="Plate" parent="Counter/Seats/Seat2" instance=ExtResource("4_xhe28")]
 
 [node name="Seat3" type="Node3D" parent="Counter/Seats"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 script = ExtResource("2_h5ort")
 
-[node name="Plate" type="Area3D" parent="Counter/Seats/Seat3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-script = ExtResource("3_l1gvo")
-
-[node name="Collider" type="CollisionShape3D" parent="Counter/Seats/Seat3/Plate"]
-shape = SubResource("CylinderShape3D_q6nci")
-
-[node name="Mesh" type="MeshInstance3D" parent="Counter/Seats/Seat3/Plate"]
-mesh = SubResource("CylinderMesh_i45ce")
-
 [node name="Character" parent="Counter/Seats/Seat3" instance=ExtResource("2_30pvr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
+
+[node name="Plate" parent="Counter/Seats/Seat3" instance=ExtResource("4_xhe28")]
 
 [node name="Pantry" type="Node3D" parent="Counter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)

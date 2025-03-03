@@ -3,7 +3,7 @@ extends Node3D
 signal char_seated
 signal char_exited
 
-@onready var skin = $Mesh.mesh.material.albedo_color
+@onready var skin = $CharMesh.mesh.material.albedo_color
 
 var up_distance: float = 1.3	
 var up_duration: float = 0.7

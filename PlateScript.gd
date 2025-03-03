@@ -1,21 +1,31 @@
 extends Area3D
 
 signal food_plated
+signal food_unplated
+signal correct_food
+signal wrong_food
 
-var state = false
+var active = false
+var food_wanted # directly set by parent
 
 func _ready():
-	connect("input_event", _on_input_event)
-	#connect("area_entered", _on_area_entered)
-
-func _on_input_event(_camera, event, _click_position, _click_normal, _shape_idx):
-	# Body entered?
-	if state and event is InputEventMouseButton and event.pressed:
-		emit_signal("food_plated")
+	connect("area_entered", _on_area_entered)
+	connect("area_exited", _on_area_exited)
 
 func change_state():
-	state = !state
+	active = !active
 
-#func _on_area_entered(area):
-	#if state:
-		#print(area, " area_entered")
+func check_food(plated_food):
+	if plated_food == food_wanted:
+		emit_signal("correct_food")
+	else:
+		emit_signal("wrong_food")
+
+# Pass self to Main when food plated
+func _on_area_entered(_area):
+	if active:
+		emit_signal("food_plated", self)
+
+func _on_area_exited(_area):
+	if active:
+		emit_signal("food_unplated")
