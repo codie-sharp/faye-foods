@@ -63,6 +63,7 @@ script = ExtResource("2_h5ort")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
 [node name="Plate" parent="Counter/Seats/Seat1" instance=ExtResource("4_xhe28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Seat2" type="Node3D" parent="Counter/Seats"]
 script = ExtResource("2_h5ort")
@@ -71,6 +72,7 @@ script = ExtResource("2_h5ort")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
 [node name="Plate" parent="Counter/Seats/Seat2" instance=ExtResource("4_xhe28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Seat3" type="Node3D" parent="Counter/Seats"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
@@ -80,6 +82,7 @@ script = ExtResource("2_h5ort")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1)
 
 [node name="Plate" parent="Counter/Seats/Seat3" instance=ExtResource("4_xhe28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Pantry" type="Node3D" parent="Counter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)

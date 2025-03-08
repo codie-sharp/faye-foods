@@ -6,9 +6,10 @@ extends Node3D
 var food_meshes = []
 var available_foods = []
 var available_seats = []
-var selected_food
+
+var selected_food = null
 var is_dragging = false
-var plate_has_food = null
+var hovered_object = null # When click is released, what is under
 
 func _ready():
 # Load resources
@@ -32,12 +33,11 @@ func _ready():
 	available_seats = get_node("Counter/Seats").get_children()
 	for seat in available_seats:
 		seat.seat_available.connect(_on_seat_available)
-		seat.food_plated.connect(_on_food_plated)
-		seat.food_unplated.connect(_on_food_unplated)
 		
+		# I think this stays here for drag and drop. 
+		# Seat can also subscribe to these signals
+		# Maybe seat script won't be needed eventually
 		var plate = seat.get_node("Plate")
-		plate.food_plated.connect(_on_food_plated)
-		plate.food_unplated.connect(_on_food_unplated)
 		plate.correct_food.connect(_on_correct_food)
 		plate.wrong_food.connect(_on_wrong_food)
 
@@ -48,11 +48,11 @@ func _ready():
 	timer.start()
 
 func _input(event):
-	# If click is released check if the selected food was dropped on a plate
+	# If click is released check if the selected food was dropped on a plate and check the food
 	if event is InputEventMouseButton and !event.pressed:
 		is_dragging = false
-		if plate_has_food:
-			plate_has_food.check_food(selected_food)
+		if hovered_object.has_method("check_food"):
+			hovered_object.check_food(selected_food)
 		else:
 			selected_food.global_transform.origin = selected_food.get_parent().global_transform.origin
 			selected_food = null
@@ -67,6 +67,7 @@ func _input(event):
 		query.collide_with_areas = true
 		var result = space_state.intersect_ray(query)
 		if result:
+			hovered_object = result.collider
 			var normal = result.normal
 			var radius = selected_food.get_node("Collider").shape.get_size().x / 2
 			var target_position = result.position + result.normal * radius
@@ -94,13 +95,7 @@ func _on_food_selected(food):
 func _on_seat_available(seat):
 	available_seats.append(seat)
 
-# Keep track of plated food
-func _on_food_plated(plate):
-	plate_has_food = plate
-
-func _on_food_unplated():
-	plate_has_food = null
-
+# Emitted by the plate 
 func _on_correct_food():
 	print("correct food")
 	selected_food = null
